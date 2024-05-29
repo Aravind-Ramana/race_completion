@@ -27,4 +27,5 @@ def battery_acc_constraint_func(v_prof, segment_array, slope_array, lattitude_ar
 
     energy_consumption = ((P - SolP) * dt).cumsum() / 3600
 
-    return np.min(SafeBatteryCapacity - energy_consumption), np.max((PO/(Mass*avg_speed)) - (acceleration)), MaxPower - np.max(P)
+    return np.min(SafeBatteryCapacity - energy_consumption), np.max((PO/(Mass*avg_speed)) - (acceleration)) 
+# MaxPower - np.max(P)
