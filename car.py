@@ -14,9 +14,9 @@ _CF_coeff2 = 2 * np.pi * R_Out / StatorRotorAirGap
 
 _tou_rollingresistance = R_Out * Mass * GravityAcc * ZeroSpeedCrr
 _tou_coeff1 = 0.5 * Cd * FrontalArea * AirDensity * (R_Out ** 3)
-_tou_coeff1_wR = _tou_coeff1 / R_Out
+_tou_coeff1_wR = _tou_coeff1 / R_Out**2
 _tou_coeff2 = 0.5 * AirDensity * np.pi * ((R_Out ** 5) - (R_In ** 5))
-_tou_coeff2_wR = _tou_coeff2 / R_Out
+_tou_coeff2_wR = _tou_coeff2 / R_Out**2
 
 _drag_coeff = 0.5 * CDA * AirDensity
 _slope_coeff = Mass * GravityAcc
@@ -26,6 +26,7 @@ _windage_losses_coeff_wR2 = (170.4 * (10**-6)) / (R_Out **2)
 
 def calculate_power(speed, acceleration, slope):
     speed2 = speed ** 2
+    
 
     # v_rotor = omega * R_In  # circumferential speed of rotor
     # RN = v_rotor * R_Out / AirViscosity  # Reynolds number
@@ -72,12 +73,12 @@ def calculate_power(speed, acceleration, slope):
     P_out = tou * speed / R_Out  # output power
     Pw = (speed2) * _windage_losses_coeff_wR2 # windage losses
 
-    drag_force = _drag_coeff * (speed2)
+    drag_force = _drag_coeff * ((speed-3.34)**2)#maximum possible drag
     P_acc = (drag_force + Mass * acceleration   # Adjusted for efficiency
             + _slope_coeff * np.sin(slope)) * speed
 
     P_net = P_out + Pw + Pc + Pe + P_acc
-    return P_net.clip(0)
+    return P_net.clip(0),P_out
 
 def calculate_dt(start_speed, stop_speed, dx):
     dt = 2 * dx / (start_speed + stop_speed + EPSILON)
