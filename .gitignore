@@ -1,0 +1,8 @@
+.DS_Store
+
+.venv
+__pycache__
+run_dat.csv
+
+workspace*.ipynb
+sample.py
