@@ -73,7 +73,7 @@ def calculate_power(speed, acceleration, slope):
     P_out = tou * speed / R_Out  # output power
     Pw = (speed2) * _windage_losses_coeff_wR2 # windage losses
 
-    drag_force = _drag_coeff * ((speed-3.34)**2)#maximum possible drag
+    drag_force = _drag_coeff * ((speed)**2)#maximum possible drag
     P_acc = (drag_force + Mass * acceleration   # Adjusted for efficiency
             + _slope_coeff * np.sin(slope)) * speed
 
