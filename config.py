@@ -1,7 +1,7 @@
 
 # Model Settings
-ModelMethod = "trust-constr"
-InitialGuessVelocity = 35
+ModelMethod = "COBYLA"
+InitialGuessVelocity =35
 
 RaceStartTime = 9 * 3600  # 9:00 am
 RaceEndTime = (17) * 3600  # 5:00 pm
@@ -10,7 +10,7 @@ RaceEndTime = (17) * 3600  # 5:00 pm
 # Car Data
 
 # Battery
-BatteryCapacity = 3055  # Wh
+BatteryCapacity = 3055*0.9  # Wh
 DeepDischargeCap = 0.20  # 20%
 
 # Physical Attributes
@@ -21,10 +21,10 @@ Wheels = 3
 StatorRotorAirGap = 1.5 * 10**-3
 
 # Resistive Coeff
-CDA = 0.092
+CDA = 0.14
 ZeroSpeedCrr = 0.0045
 FrontalArea = 1 # m^2
-Cd = 0.092  # coefficient of drag
+Cd = 0.14  # coefficient of drag
 
 # Solar Panel Data
 PanelArea = 6 # m^2

@@ -1,7 +1,7 @@
 import pandas as pd
 
 # Load the data from the CSV file
-data = pd.read_csv("temp_route_data.csv")
+data = pd.read_csv("raw_route_data.csv")
 
 # Define the number of rows to group for calculating the mean
 group_size = 570
