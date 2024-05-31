@@ -1,6 +1,6 @@
 import numpy as np
 
-from config import BatteryCapacity
+from config import InitialBatteryCapacity, BatteryCapacity
 from car import calculate_dt, calculate_power
 from solar import calculate_incident_solarpower
 
@@ -19,8 +19,8 @@ def extract_profiles(velocity_profile, segment_array, slope_array, lattitude_arr
 
     net_energy_profile = energy_consumption.cumsum() - energy_gain.cumsum()
     
-    battery_profile = BatteryCapacity - net_energy_profile
-    battery_profile = np.concatenate((np.array([BatteryCapacity]), battery_profile))
+    battery_profile = InitialBatteryCapacity - net_energy_profile
+    battery_profile = np.concatenate((np.array([InitialBatteryCapacity]), battery_profile))
 
     battery_profile = battery_profile * 100 / (BatteryCapacity)
 

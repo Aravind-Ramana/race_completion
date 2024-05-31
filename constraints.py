@@ -1,10 +1,10 @@
 import numpy as np
 
-from config import BatteryCapacity, DeepDischargeCap, MaxVelocity, Mass, MaxCurrent, BusVoltage
+from config import BatteryCapacity, DeepDischargeCap, MaxVelocity, Mass, MaxCurrent, BusVoltage, InitialBatteryCapacity
 from car import calculate_dt, calculate_power
 from solar import calculate_incident_solarpower
 
-SafeBatteryCapacity = BatteryCapacity * (1 - DeepDischargeCap)
+SafeBatteryLevel = BatteryCapacity * (DeepDischargeCap)
 MaxPower = MaxCurrent * BusVoltage
 
 # Bounds for the velocity
@@ -26,6 +26,7 @@ def battery_acc_constraint_func(v_prof, segment_array, slope_array, lattitude_ar
     SolP = calculate_incident_solarpower(dt.cumsum(), lattitude_array, longitude_array)
 
     energy_consumption = ((P - SolP) * dt).cumsum() / 3600
+    battery_profile = InitialBatteryCapacity - energy_consumption - SafeBatteryLevel
 
-    return np.min(SafeBatteryCapacity - energy_consumption), np.max(PO.clip(0)/(Mass * avg_speed) - acceleration), 
+    return np.min(battery_profile), np.max(PO.clip(0)/(Mass * avg_speed) - acceleration), 
 # , MaxPower - np.max(P)

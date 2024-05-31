@@ -98,6 +98,8 @@ def create_app(
                 figure={
                     'data': [
                         go.Scatter(x=distances, y=battery_profile, mode='lines+markers', name='Battery'),
+                        go.Scatter(x=[min(distances), max(distances)], y=[100, 100], mode='lines', name="Max Battery Level", line=dict(color='red', dash='dot')),
+                        go.Scatter(x=[min(distances), max(distances)], y=[config.DeepDischargeCap*100, config.DeepDischargeCap*100], mode='lines', name="Deep Discharge Level", line=dict(color='orange', dash='dot')),
                         # go.Scatter(x=[min(distances), max(distances)], y=[100 * config.DeepDischargeCap, 100 * config.DeepDischargeCap], mode='lines', line=dict(color='purple', dash='dot')),
                         # go.Scatter(x=[min(distances), max(distances)], y=[0, 0], mode='lines', line=dict(color='red', dash='dot')),
                         # go.Scatter(x=[min(distances), max(distances)], y=[100, 100], mode='lines', line=dict(color='red', dash='dot')),
