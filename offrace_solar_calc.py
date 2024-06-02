@@ -14,6 +14,7 @@ def calculate_incident_solarpower(globaltime, latitude, longitude):
     intensity = _calc_solar_irradiance(RaceStartTime + gt)
     return intensity * _power_coeff/3600
 
+
 def calculate_energy(interval_start, interval_end):
     # Helper function to integrate the power over the time interval
     def integrand(t):
