@@ -11,8 +11,8 @@ RaceEndTime = (17) * 3600  # 5:00 pm
 
 # Battery
 BatteryCapacity = 3055 # Wh
-DeepDischargeCap = 0.56# 20%
-InitialBatteryCapacity = BatteryCapacity * 1# Wh
+DeepDischargeCap = 0 
+InitialBatteryCapacity = BatteryCapacity *0.36# Wh
 
 # Physical Attributes
 R_In = 0.214 # inner radius of wheel
