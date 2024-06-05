@@ -1,18 +1,10 @@
 
-# Model Settings
-ModelMethod = "COBYLA"
-InitialGuessVelocity =25
-
-RaceStartTime = 8 * 3600  # 8:00 am
-RaceEndTime = (17) * 3600  # 5:00 pm
-
 # ---------------------------------------------------------------------------------------------------------
 # Car Data
 
 # Battery
 BatteryCapacity = 3055 # Wh
-DeepDischargeCap = 0.5
-InitialBatteryCapacity = BatteryCapacity *0.8# Wh
+DeepDischargeCap = 0.2
 
 # Physical Attributes
 R_In = 0.214 # inner radius of wheel

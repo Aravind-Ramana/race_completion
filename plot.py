@@ -149,6 +149,9 @@ if __name__ == '__main__':
     output = pd.read_csv("run_dat.csv")
     distances, velocity_profile, acceleration_profile, battery_profile, energy_consumption_profile, solar_profile, time = map(np.array, (output[c] for c in output.columns.to_list()))
 
+    distances = distances.cumsum()
+    time = time.cumsum()
+
     app = create_app(
         distances, velocity_profile, acceleration_profile, battery_profile,
         energy_consumption_profile, solar_profile, time

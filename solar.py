@@ -1,6 +1,7 @@
 import numpy as np
 
-from config import PanelArea, PanelEfficiency, RaceStartTime, RaceEndTime
+from config import PanelArea, PanelEfficiency
+from state import RaceStartTime, RaceEndTime
 
 DT = RaceEndTime - RaceStartTime
 _power_coeff = PanelArea * PanelEfficiency
