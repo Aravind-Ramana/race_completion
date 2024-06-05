@@ -1,6 +1,5 @@
 import numpy as np
-import math
-from datetime import datetime
+from datetime import datetime, timedelta
 from config import PanelArea, PanelEfficiency, RaceStartTime, RaceEndTime
 
 # Constants
@@ -19,8 +18,8 @@ def calculate_B(N):
 
 # Function to calculate the equation of time (E)
 def equation_of_time(B):
-    return 229.2 * (0.00018865 * math.cos(math.radians(B)) - 0.0032077 * math.sin(math.radians(B)) +
-                    0.041016 * math.cos(math.radians(2 * B)) - 0.048093 * math.sin(math.radians(2 * B)))
+    return 229.2 * (0.00018865 * np.cos(np.radians(B)) - 0.0032077 * np.sin(np.radians(B)) +
+                    0.041016 * np.cos(np.radians(2 * B)) - 0.048093 * np.sin(np.radians(2 * B)))
 
 # Function to calculate solar local time (T_s)
 def solar_local_time(standard_time, longitude, standard_meridian, E):
@@ -32,7 +31,7 @@ def hour_angle(T_s):
 
 # Function to calculate sun declination angle (δ)
 def sun_declination_angle(N):
-    return 23.45 * math.sin(math.radians(360 / 365 * (284 + N)))
+    return 23.45 * np.sin(np.radians(360 / 365 * (284 + N)))
 
 # Function to calculate solar irradiance (G_b)
 def solar_irradiance(G_s_prime, latitude, declination, hour_angle):
@@ -41,15 +40,10 @@ def solar_irradiance(G_s_prime, latitude, declination, hour_angle):
     hour_angle_rad = np.radians(hour_angle)
     return G_s_prime * (np.cos(latitude_rad) * np.cos(declination_rad) * np.cos(hour_angle_rad) + np.sin(latitude_rad) * np.sin(declination_rad))
 
-# Function to calculate solar irradiance based on time
-def _calc_solar_irradiance(time):
-    return 1073.099 * np.exp(-0.5 * ((time - 51908.735) / 11484.950)**2)
-
 # Main function to calculate incident solar power
 def calculate_incident_solarpower(globaltime, latitude_array, longitude_array):
     # Assume a fixed date for simplicity, can be changed as needed
     date = datetime.now()
-    time = datetime.now()
 
     # Calculate the day of the year
     N = day_of_year(date)
@@ -61,24 +55,19 @@ def calculate_incident_solarpower(globaltime, latitude_array, longitude_array):
     # Calculate the equation of time
     E = equation_of_time(B)
 
+    time = globaltime % DT
+
     # Calculate the standard time in hours (decimal)
-    standard_time = time.hour + time.minute / 60
+    standard_time = time / 3600
 
     # Calculate the solar local time for each point
     T_s = solar_local_time(standard_time, longitude_array, standard_meridian, E)
-
     # Calculate the hour angle for each point
     omega = hour_angle(T_s)
-
     # Calculate the sun declination angle
     delta = sun_declination_angle(N)
-
     # Calculate the solar irradiance for each point
     G_b = solar_irradiance(G_s_prime, latitude_array, delta, omega)
-
-    # Adjust for the specific time of day
-    gt = globaltime % DT
-    intensity = _calc_solar_irradiance(RaceStartTime + gt)
     
     return G_b * _power_coeff
 

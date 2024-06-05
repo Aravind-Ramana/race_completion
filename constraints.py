@@ -2,7 +2,7 @@ import numpy as np
 
 from config import BatteryCapacity, DeepDischargeCap, MaxVelocity, Mass, MaxCurrent, BusVoltage, InitialBatteryCapacity
 from car import calculate_dt, calculate_power
-from accurate_solarprofile import calculate_incident_solarpower
+from solar import calculate_incident_solarpower
 
 SafeBatteryLevel = BatteryCapacity * (DeepDischargeCap)
 MaxPower = MaxCurrent * BusVoltage
