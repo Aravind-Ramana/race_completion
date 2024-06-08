@@ -1,6 +1,7 @@
 import numpy as np
 from scipy.integrate import quad
-from config import PanelArea, PanelEfficiency, RaceStartTime, RaceEndTime
+from config import PanelArea, PanelEfficiency
+from state import RaceStartTime, RaceEndTime
 
 DT = RaceEndTime - RaceStartTime
 _power_coeff = PanelArea * PanelEfficiency
@@ -14,26 +15,26 @@ def calculate_incident_solarpower(globaltime, latitude, longitude):
     intensity = _calc_solar_irradiance(RaceStartTime + gt)
     return intensity * _power_coeff/3600
 
+# Helper function to integrate the power over the time interval
+def integrand(t):
+    intensity = _calc_solar_irradiance(t)
+    return intensity * _power_coeff/3600
 
 def calculate_energy(interval_start, interval_end):
-    # Helper function to integrate the power over the time interval
-    def integrand(t):
-        intensity = _calc_solar_irradiance(t)
-        return intensity * _power_coeff/3600
-
     # Perform the integration over the specified time interval
     energy, _ = quad(integrand, interval_start, interval_end)
     return energy
 
-# Define the time intervals in seconds (assuming RaceStartTime is 0 for simplicity)
-interval1_start = 6 * 3600  # 6 AM in seconds
-interval1_end = 9* 3600  # 9 AM in seconds
-interval2_start = 17 * 3600  # 5 PM in seconds
-interval2_end = 18 * 3600  # 6 PM in seconds
+if __name__ == '__main__':
+    # Define the time intervals in seconds (assuming RaceStartTime is 0 for simplicity)
+    interval1_start = 6 * 3600  # 6 AM in seconds
+    interval1_end = 9* 3600  # 9 AM in seconds
+    interval2_start = 17 * 3600  # 5 PM in seconds
+    interval2_end = 18 * 3600  # 6 PM in seconds
 
-# Calculate the energy for both intervals
-energy_interval1 = calculate_energy(interval1_start, interval1_end)
-energy_interval2 = calculate_energy(interval2_start, interval2_end)
+    # Calculate the energy for both intervals
+    energy_interval1 = calculate_energy(interval1_start, interval1_end)
+    energy_interval2 = calculate_energy(interval2_start, interval2_end)
 
-print(f"Energy generated from 6-9 AM: {energy_interval1} wh")
-print(f"Energy generated from 5-6 PM: {energy_interval2} wh")
+    print(f"Energy generated from 6-9 AM: {energy_interval1} wh")
+    print(f"Energy generated from 5-6 PM: {energy_interval2} wh")

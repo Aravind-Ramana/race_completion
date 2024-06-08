@@ -13,7 +13,7 @@ def extract_profiles(velocity_profile, segment_array, slope_array, lattitude_arr
     acceleration = (stop_speeds - start_speeds) / dt
 
     P,_ = calculate_power(avg_speed, acceleration, slope_array)
-    SolP = calculate_incident_solarpower(dt.cumsum(), lattitude_array, longitude_array)
+    SolP = calculate_incident_solarpower(dt.cumsum() + state.TimeOffset, lattitude_array, longitude_array)
 
     energy_consumption = P * dt /3600
     energy_gain = SolP * dt /3600
@@ -34,5 +34,5 @@ def extract_profiles(velocity_profile, segment_array, slope_array, lattitude_arr
         battery_profile,
         np.concatenate((np.array([np.nan]), energy_consumption,)),
         np.concatenate((np.array([np.nan]), energy_gain)),
-        np.concatenate((np.array([0]), dt)),
+        np.concatenate((np.array([0]), dt.cumsum())) + state.TimeOffset,
     ]

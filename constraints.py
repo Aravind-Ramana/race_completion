@@ -24,7 +24,7 @@ def battery_acc_constraint_func(v_prof, segment_array, slope_array, lattitude_ar
     acceleration = (stop_speeds - start_speeds) / dt
 
     P, PO = calculate_power(avg_speed, acceleration, slope_array)
-    SolP = calculate_incident_solarpower(dt.cumsum(), lattitude_array, longitude_array)
+    SolP = calculate_incident_solarpower(dt.cumsum() + state.TimeOffset, lattitude_array, longitude_array)
 
     energy_consumption = ((P - SolP) * dt).cumsum() / 3600
     battery_profile = state.InitialBatteryCapacity - energy_consumption - SafeBatteryLevel
@@ -40,7 +40,7 @@ def final_battery_constraint_func(v_prof, segment_array, slope_array, lattitude_
     acceleration = (stop_speeds - start_speeds) / dt
 
     P, _= calculate_power(avg_speed, acceleration, slope_array)
-    SolP = calculate_incident_solarpower(dt.cumsum(), lattitude_array, longitude_array)
+    SolP = calculate_incident_solarpower(dt.cumsum() + state.TimeOffset, lattitude_array, longitude_array)
 
     energy_consumption = ((P - SolP) * dt).cumsum() / 3600
     final_battery_lev = state.InitialBatteryCapacity - energy_consumption[-1] - state.FinalBatteryCapacity

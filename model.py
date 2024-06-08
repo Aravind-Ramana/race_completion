@@ -50,8 +50,10 @@ def main(route_df):
     )
     optimised_velocity_profile = np.array(optimised_velocity_profile.x)*1
 
+    time_taken = objective(optimised_velocity_profile, segment_array)
+
     print("done.")
-    print("Total time taken for race:", objective(optimised_velocity_profile, segment_array), "s")
+    print("Total time taken for race:", time_taken, "s")
 
     outdf = pd.DataFrame(
         dict(zip(
@@ -60,9 +62,9 @@ def main(route_df):
         ))
     )
 
-    return outdf
+    return outdf, time_taken
 
 if __name__ == "__main__":
-    outdf = main(state.route_df)
+    outdf, _ = main(state.route_df)
     outdf.to_csv('run_dat.csv', index=False)
     print("Written results to `run_dat.csv`")
