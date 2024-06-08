@@ -13,7 +13,7 @@ Day=1
 # BatteryLevel
 BatteryLevelWayPoints = [1, 0.808, 0.488, 0.408, 0.28, 0.2]
 # Route DF
-DF_WayPoints = [0, 110, 220, 330, 440, 550]
+DF_WayPoints = [0, 102, 207, 301, 415, 520]
 
 InitialBatteryCapacity = None
 FinalBatteryCapacity = None
