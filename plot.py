@@ -157,6 +157,25 @@ def create_app(
                 },
                 style={'width': '45%', 'display': 'inline-block', **custom_styles}
             ),
+            dcc.Graph(
+                id='time-profile',
+                figure={
+                    'data': [
+                        go.Scatter(x=distances, y=time/3600, mode='lines+markers', name='Time'),
+                        go.Scatter(x=[322000, 322000], y=[0, 100], mode='lines', name="ControlStop", line=dict(color='blue', dash='dot')),
+                        go.Scatter(x=[588000, 588000], y=[0, 100], mode='lines', name="ControlStop", line=dict(color='blue', dash='dot')),
+                        go.Scatter(x=[987000, 987000], y=[0, 100], mode='lines', name="ControlStop", line=dict(color='blue', dash='dot')),
+                        go.Scatter(x=[1210000, 1210000], y=[0, 100], mode='lines', name="ControlStop", line=dict(color='blue', dash='dot')),
+                        go.Scatter(x=[1493000, 1493000], y=[0, 100], mode='lines', name="ControlStop", line=dict(color='blue', dash='dot')),
+                        go.Scatter(x=[1766000, 1766000], y=[0, 100], mode='lines', name="ControlStop", line=dict(color='blue', dash='dot')),
+                        go.Scatter(x=[2178000, 2178000], y=[0, 100], mode='lines', name="ControlStop", line=dict(color='blue', dash='dot')),
+                        go.Scatter(x=[2432000, 2432000], y=[0, 100], mode='lines', name="ControlStop", line=dict(color='blue', dash='dot')),
+                        go.Scatter(x=[2720000, 2720000], y=[0, 100], mode='lines', name="ControlStop", line=dict(color='blue', dash='dot')),
+                    ],
+                    'layout': go.Layout(title='Time Distance Correlation', xaxis={'title': 'Distance'}, yaxis={'title': 'Net Time'})
+                },
+                style={'width': '45%', 'display': 'inline-block', **custom_styles}
+            ),
         ], style={'display': 'flex', 'flex-wrap': 'wrap', 'justify-content': 'center'})
     ], style={'background-color': '#ffffff', 'padding': '20px'})
 
