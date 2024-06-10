@@ -21,7 +21,7 @@ def calculate_power(speed, acceleration, slope):
 
     # t = r_out * ((m * 9.81 * u1) + (0.5 * Cd * a * rho * (omega ** 2) * (r_out ** 2)))
     drag_tou = _drag_coeff_wR2 * (speed2)
-    tou = _frictional_tou + drag_tou
+    tou = _frictional_tou*np.cos(np.radians(slope))+ drag_tou
     
     # Finding winding temperature
     Tw_i = Ta

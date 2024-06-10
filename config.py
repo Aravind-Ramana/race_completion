@@ -9,7 +9,7 @@ DeepDischargeCap = 0.2
 # Physical Attributes
 R_In = 0.214 # inner radius of wheel
 R_Out = 0.2785  # outer radius of wheel
-Mass = 260 # kg
+Mass = 267 # kg
 Wheels = 3
 StatorRotorAirGap = 1.5 * 10**-3
 
@@ -17,7 +17,7 @@ StatorRotorAirGap = 1.5 * 10**-3
 CDA = 0.092
 ZeroSpeedCrr = 0.0045
 FrontalArea = 1 # m^2
-Cd = 0.092  # coefficient of drag
+Cd = 0.092 # coefficient of drag
 
 # Solar Panel Data
 PanelArea = 6 # m^2
