@@ -72,7 +72,7 @@ def create_app(
             html.Div([
                 html.H2("Summary", style={'text-align': 'center', 'font-family': '"Space Grotesk", sans-serif'}),
                 html.P(f"Total Distance: {round(distances[-1]/1000, 3)} km"),
-                html.P(f"Time Taken: {time[-1]//3600-3}hrs {(time[-1]%3600)//60-7}mins {round(((time[-1]%3600)%60), 3)}secs"),
+                html.P(f"Time Taken: {time[-1]//3600}hrs {(time[-1]%3600)//60}mins {round(((time[-1]%3600)%60), 3)}secs"),
                 html.P(f"No of points: {len(distances)}pts"),
 
             ], style={'width': '25%', 'display': 'inline-block', 'vertical-align': 'top', 'padding-left': '20px', **custom_styles}),
