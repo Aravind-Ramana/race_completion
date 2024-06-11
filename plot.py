@@ -182,7 +182,7 @@ def create_app(
     return app
 
 if __name__ == '__main__':
-    output = pd.read_csv("run_dat.csv")
+    output = pd.read_csv("run_dat.csv").fillna(0)
     distances, velocity_profile, acceleration_profile, battery_profile, energy_consumption_profile, solar_profile, time = map(np.array, (output[c] for c in output.columns.to_list()))
 
     distances = distances.cumsum()
