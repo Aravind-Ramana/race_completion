@@ -53,7 +53,7 @@ def main(route_df):
     time_taken = objective(optimised_velocity_profile, segment_array)
 
     print("done.")
-    print("Total time taken for race:", time_taken, "s")
+    print("Total time taken for race:", time_taken/3600, "hrs")
 
     outdf = pd.DataFrame(
         dict(zip(
@@ -61,7 +61,7 @@ def main(route_df):
             extract_profiles(optimised_velocity_profile, segment_array, slope_array, lattitude_array, longitude_array)
         ))
     )
-
+    print((outdf['CummulativeDistance'].cumsum()).iloc[-1]/1000)
     return outdf, time_taken
 
 if __name__ == "__main__":

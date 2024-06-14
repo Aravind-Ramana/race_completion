@@ -13,8 +13,8 @@ time_counter = 0
 CONTROL_STOP_DURATION = 30 * 60
 stop_gain = 0
 
-for i in range(10):
-    if i % 2 == 0:
+for i in range(13):
+    if state.DF_WayPoints[i+1] not in state.DayEnd_WayPoints:
         state.set_day_state(day_counter, i, time_counter)
         state.InitialBatteryCapacity = min(config.BatteryCapacity, stop_gain + state.InitialBatteryCapacity)
         outdf, timetaken = main(state.route_df)
@@ -33,10 +33,8 @@ for i in range(10):
         df_list.append(outdf)
         time_counter += timetaken
 
-        stop_time = state.DT - (time_counter % state.DT)
-        stop_gain = calculate_energy(time_counter, time_counter + stop_time)
-        time_counter += stop_time
-
+        stop_gain = calculate_energy(17*3600, 18*3600)
+        stop_gain += calculate_energy(5*3600, 8*3600)
         day_counter += 1
 
 dfnet = pd.concat(df_list)
