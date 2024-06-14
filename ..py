@@ -1,44 +1,24 @@
-# print(13197.351022478437+12415.866849804792+11938.438883540466+16593.25126685112 +11865.679413820491+10870.552655633557+10145.995783995659+14883.272281976002+11248.927485141556+12670.989477832467)
 import pandas as pd
-import numpy as np
 
 # File paths
-input_file = 'raw_route_data.csv'
-output_file = 'slope.csv'
+processed_data_file = 'processed_route_data.csv'
+wind_speed_file = 'wind_speed.csv'
 
-# Read the input CSV file
-df = pd.read_csv(input_file)
+# Read processed_data.csv
+processed_data_df = pd.read_csv(processed_data_file)
 
-# Initialize lists for elevations and slopes
-elevations = []
-slopes = []
-cumulative_distances = []
+# Read wind_speed.csv
+wind_speed_df = pd.read_csv(wind_speed_file)
 
-# Loop through the data in chunks of 600 points
-for i in range(0, len(df), 600):
-    chunk = df.iloc[i:i+600]
-    if len(chunk) == 600:  # Ensure we have a full chunk of 600 points
-        # Calculate elevation for each point in the chunk
-        elevation = np.sum(np.tan(np.radians(chunk['Slope (deg)'])) * chunk['StepDistance(m)'])
-        elevations.append(elevation)
-        
-        # Calculate cumulative distance for the chunk
-        cumulative_distance = chunk['CumulativeDistance(km)'].iloc[-1] - chunk['CumulativeDistance(km)'].iloc[0]
-        # Calculate cumulative distance for the chunk
-       
-        cumulative_distances.append(cumulative_distance)
-        # Calculate slope
-        slope = elevation / (cumulative_distance * 1000)  # Convert km to meters
-        slopes.append(slope)
+# Assuming wind_speed.csv has columns 'Column1' and 'Column2' that you want to add to processed_data.csv
+# Adjust column names according to your actual data
+columns_to_add = ['WindSpeed(m/s)', 'Winddirection(frmnorth)']
 
-# Create a DataFrame with the results
-results_df = pd.DataFrame({'CumulativeDistance(km)': np.cumsum(cumulative_distances),
-    'Elevation': np.cumsum(elevations),
-    'Slope': slopes
-    
-})
+# Concatenate or merge based on index or a common column
+# Here, assuming they have the same number of rows and can be concatenated side by side
+combined_df = pd.concat([processed_data_df, wind_speed_df[columns_to_add]], axis=1)
 
-# Save to a new CSV file
-results_df.to_csv(output_file, index=False)
+# Save the combined DataFrame back to processed_data.csv
+combined_df.to_csv(processed_data_file, index=False)
 
-print(f"Slope data saved to {output_file}")
+print(f"The last two columns from {wind_speed_file} have been added to {processed_data_file}.")

@@ -5,7 +5,7 @@ import numpy as np
 data = pd.read_csv("raw_route_data.csv")
 
 # Define the number of rows to group for calculating the mean
-group_size = 600
+group_size = 600 
 outdf = pd.DataFrame(columns=data.columns)
 row_counter = 0
 

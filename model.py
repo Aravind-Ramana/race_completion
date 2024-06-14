@@ -12,9 +12,11 @@ def main(route_df):
     slope_array = route_df.iloc[:, 2].to_numpy()
     lattitude_array = route_df.iloc[:, 3].to_numpy()
     longitude_array = route_df.iloc[:, 4].to_numpy()
-
+    winds_array= route_df.iloc[:,5].to_numpy()
+    winddir_array=route_df.iloc[:,6].to_numpy()
     N_V = len(route_df) + 1
-    velocity_profile = np.ones(N_V) * state.InitialGuessVelocity
+    # velocity_profile = np.ones(N_V) * state.InitialGuessVelocity
+    velocity_profile = np.concatenate([[0], np.ones(N_V-2) * state.InitialGuessVelocity, [0]])
 
     bounds = get_bounds(N_V)
     constraints = [
@@ -22,14 +24,14 @@ def main(route_df):
             "type": "ineq",
             "fun": battery_acc_constraint_func,
             "args": (
-                segment_array, slope_array, lattitude_array, longitude_array
+                segment_array, slope_array, lattitude_array, longitude_array,winds_array,winddir_array
             )
         },
         {
             "type": "ineq",
             "fun": final_battery_constraint_func,
             "args": (
-                segment_array, slope_array, lattitude_array, longitude_array
+                segment_array, slope_array, lattitude_array, longitude_array,winds_array,winddir_array
             )
         },
     ]
@@ -58,7 +60,7 @@ def main(route_df):
     outdf = pd.DataFrame(
         dict(zip(
             ['CummulativeDistance', 'Velocity', 'Acceleration', 'Battery', 'EnergyConsumption', 'Solar', 'Time'],
-            extract_profiles(optimised_velocity_profile, segment_array, slope_array, lattitude_array, longitude_array)
+            extract_profiles(optimised_velocity_profile, segment_array, slope_array, lattitude_array, longitude_array,winds_array,winddir_array)
         ))
     )
     print((outdf['CummulativeDistance'].cumsum()).iloc[-1]/1000)

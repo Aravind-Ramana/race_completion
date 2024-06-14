@@ -5,14 +5,15 @@ import state
 from car import calculate_dt, calculate_power
 from solar import calculate_incident_solarpower
 
-def extract_profiles(velocity_profile, segment_array, slope_array, lattitude_array, longitude_array):
+def extract_profiles(velocity_profile, segment_array, slope_array, lattitude_array, longitude_array,winds_array,winddir_array):
     start_speeds, stop_speeds = velocity_profile[:-1], velocity_profile[1:]
-    
+    ws=winds_array
+    wd=winddir_array
     avg_speed = (start_speeds + stop_speeds) / 2
     dt = calculate_dt(start_speeds, stop_speeds, segment_array)
     acceleration = (stop_speeds - start_speeds) / dt
 
-    P,_ = calculate_power(avg_speed, acceleration, slope_array)
+    P,_ = calculate_power(avg_speed, acceleration, slope_array,ws,wd)
     SolP = calculate_incident_solarpower(dt.cumsum() + state.TimeOffset, lattitude_array, longitude_array)
 
     energy_consumption = P * dt /3600

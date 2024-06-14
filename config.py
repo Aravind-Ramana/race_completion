@@ -37,3 +37,4 @@ Ta = 295
 # Car Constraints
 MaxVelocity = 35 # m/s
 MaxCurrent = 12.3  # Am
+MaxAcc=0.1

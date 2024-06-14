@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 
 from config import (
     Mass, ZeroSpeedCrr, AirDensity, CDA, R_Out, Ta,
@@ -7,21 +8,20 @@ from config import (
 
 EPSILON = 10**-8
 
+# Constants
 _frictional_tou = R_Out * Mass * GravityAcc * ZeroSpeedCrr
 _drag_coeff = 0.5 * CDA * AirDensity * (R_Out ** 3)
-_drag_coeff_wR2 = _drag_coeff / R_Out**2
-
+_drag_coeff_wR2 = _drag_coeff / (R_Out ** 2)
 _slope_coeff = Mass * GravityAcc
+_windage_losses_coeff_wR2 = (170.4 * 10**-6) / (R_Out ** 2)
 
-_windage_losses_coeff_wR2 = (170.4 * (10**-6)) / (R_Out **2)
 
-
-def calculate_power(speed, acceleration, slope):
+def calculate_power(speed, acceleration, slope,ws,wd):
     speed2 = speed ** 2
 
-    # t = r_out * ((m * 9.81 * u1) + (0.5 * Cd * a * rho * (omega ** 2) * (r_out ** 2)))
-    drag_tou = _drag_coeff_wR2 * (speed2)
-    tou = _frictional_tou*np.cos(np.radians(slope))+ drag_tou
+    # Calculate drag torque considering wind speed
+    drag_tou = _drag_coeff_wR2 * ((speed2+ws**2-2*speed*ws*np.cos(np.radians(wd))))
+    tou = _frictional_tou * np.cos(np.radians(slope)) + drag_tou
     
     # Finding winding temperature
     Tw_i = Ta
