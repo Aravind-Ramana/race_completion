@@ -27,13 +27,13 @@ def main(route_df):
                 segment_array, slope_array, lattitude_array, longitude_array,winds_array,winddir_array
             )
         },
-        {
-            "type": "ineq",
-            "fun": final_battery_constraint_func,
-            "args": (
-                segment_array, slope_array, lattitude_array, longitude_array,winds_array,winddir_array
-            )
-        },
+        # {
+        #     "type": "ineq",
+        #     "fun": final_battery_constraint_func,
+        #     "args": (
+        #         segment_array, slope_array, lattitude_array, longitude_array,winds_array,winddir_array
+        #     )
+        # },
     ]
 
 
