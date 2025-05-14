@@ -222,7 +222,7 @@ if __name__ == '__main__':
     distances = distances.cumsum()
     
     app = create_app(distances, velocity_profile, acceleration_profile, battery_profile, energy_consumption_profile, solar_profile, time)
-    app.run_server(debug=True)
+    app.run(debug=True)
 
 # import dash
 # from dash import dcc, html
